@@ -1,0 +1,92 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Security-Policy" content="default-src * data:; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'">
+  <script src="components/loader.js"></script>
+  <script src="lib/angular/angular.min.js"></script>
+  <script src="lib/onsenui/js/onsenui.min.js"></script>
+  <script src="lib/onsenui/js/angular-onsenui.min.js"></script>
+  <script src="js/database.js"></script>
+  <script src="js/dictionary.js"></script>
+
+  <link rel="stylesheet" href="components/loader.css">
+  <link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
+  <link rel="stylesheet" href="lib/onsenui/css/onsen-css-components.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <script>
+    ons.bootstrap()
+      .controller('AppController', function() {
+      });
+    ons.ready(function() {
+        console.log("Onsen UI is ready!");
+        
+        document.addEventListener('init', function(event) {
+          if (event.target.id == "pageDict")
+          {
+            dict_init();
+          }
+        });
+    });
+  </script>
+  
+</head>
+<body>
+  <ons-page ng-controller="AppController as app">
+    <ons-toolbar>
+      <div class="center">Language</div>
+    </ons-toolbar>
+
+    <ons-tabbar position="auto">
+      <ons-tab page="pageDictTemplate" label="Dictionary" icon="square" active></ons-tab>
+      <ons-tab page="pageQuizTemplate" label="Quiz" icon="square"></ons-tab>
+    </ons-tabbar>
+  </ons-page>
+
+  <ons-template id="pageDictTemplate">
+    <ons-page id="pageDict">
+      <div class="content" style="text-align: center">
+        <p>Dictionary</p>
+        <div style="text-align: center; margin-top: 30px;">
+          <p>
+            <ons-input id="dict_word1" modifier="underbar" placeholder="Type a word here" float></ons-input>
+          </p>
+          <p>
+            <ons-input id="dict_word2" modifier="underbar" placeholder="Type a word here" float></ons-input>
+          </p>
+          <p style="margin-top: 30px;">
+            <ons-button onclick="dict_addWord()">Add word</ons-button>
+          </p>
+          <ons-list id="dict_list">
+          </ons-list>
+        </div>
+      </div>
+    </ons-page>
+  </ons-template>
+
+  <ons-template id="pageQuizTemplate">
+    <ons-page>
+      <div class="content" style="text-align: center">
+        <p>Quiz</p>
+      </div>
+    </ons-page>
+  </ons-template>
+
+  <template id="dict_itemTemplate">
+    <div class="left">
+	    Word 1
+    </div>
+    <div class="center">
+	    Word 2
+    </div>
+    <div class="right">
+  	  <ons-button modifier="quiet" onclick="dict_removeWord(this.parentElement.parentElement)">
+  	    <ons-icon icon="ion-close-circled" class="list-item__icon"></ons-icon>
+  	  </ons-button>
+    </div>
+  </template>
+
+</body>
+</html>
