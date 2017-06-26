@@ -8,8 +8,10 @@
   <script src="lib/angular/angular.min.js"></script>
   <script src="lib/onsenui/js/onsenui.min.js"></script>
   <script src="lib/onsenui/js/angular-onsenui.min.js"></script>
+  <script src="js/utils.js"></script>
   <script src="js/database.js"></script>
   <script src="js/dictionary.js"></script>
+  <script src="js/quiz.js"></script>
 
   <link rel="stylesheet" href="components/loader.css">
   <link rel="stylesheet" href="lib/onsenui/css/onsenui.css">
@@ -70,6 +72,11 @@
     <ons-page>
       <div class="content" style="text-align: center">
         <p>Quiz</p>
+        <div style="text-align: center; margin-top: 30px;">
+          <p style="margin-top: 30px;">
+            <ons-button onclick="quiz_start()">Start</ons-button>
+          </p>
+        </div>
       </div>
     </ons-page>
   </ons-template>

@@ -25,7 +25,7 @@ var dict_addWord = function() {
   
   var word1 = wordField1.value;
   var word2 = wordField2.value;
-  if (word1 && word2)
+  if (word1 && word2 && !db_hasDictionaryItem(word1, word2))
   {
     dict_addWordInternal(word1, word2);
     
