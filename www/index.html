@@ -33,6 +33,10 @@
             dict_addDictionary(dict_thai);
             dict_load();
           }
+          else if (event.target.id == "pageQuiz")
+          {
+            quiz_init();
+          }
         });
     });
   </script>
@@ -72,13 +76,27 @@
   </ons-template>
 
   <ons-template id="pageQuizTemplate">
-    <ons-page>
+    <ons-page id="pageQuiz">
       <div class="content" style="text-align: center">
         <p>Quiz</p>
         <div style="text-align: center; margin-top: 30px;">
           <p style="margin-top: 30px;">
-            <ons-button onclick="quiz_start(this)">Start</ons-button>
+            <ons-button id="quiz_start" onclick="quiz_start()">Start</ons-button>
           </p>
+        </div>
+        <div id="quiz_main" style="text-align: center; margin-top: 30px;">
+          <p id="quiz_title">Word 0 / 0</p>
+          <p>
+            <ons-input id="quiz_question" value="Question" float readonly></ons-input>
+          </p>
+          <p>
+            <ons-input id="quiz_answer" modifier="underbar" placeholder="Type your answer here" float></ons-input>
+          </p>
+          <p style="margin-top: 30px;">
+            <ons-button id="quiz_validate" onclick="quiz_validate()">Validate</ons-button>
+          </p>
+          <ons-list id="dict_list">
+          </ons-list>
         </div>
       </div>
     </ons-page>
