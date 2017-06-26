@@ -1,5 +1,7 @@
 var quiz_list;
 
+var quiz_started = false;
+
 var quiz_start = function(buttonElement) {
   console.log("quiz_start: entry count " + dict_list.length);
   
@@ -10,6 +12,11 @@ var quiz_start = function(buttonElement) {
     console.log("quiz_start: entry #" + index + ": "
     + quiz_list[index].word1
     + " / " + quiz_list[index].word2);
+  }
+  
+  if (!quiz_started) {
+    buttonElement.innerText = "Restart";
+    quiz_started = true;
   }
 }
 
