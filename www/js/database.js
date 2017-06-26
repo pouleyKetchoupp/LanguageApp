@@ -28,24 +28,26 @@ function db_hasDictionaryItem(word1, word2) {
   return false;
 }
 
-function db_addDictionaryItem(word1, word2) {
+function db_addDictionaryItem(entry) {
+  entry.id = 1;
+  
   var list = db_getDictionary();
-  var id = 1;
-  if (list.length > 0)
-  {
-    id = list[list.length - 1].id + 1;
+  if (list.length > 0) {
+    entry.id = list[list.length - 1].id + 1;
   }
-  list.push({ id: id, word1: word1, word2: word2 });
+  
+  list.push(entry);
   db_saveDictionary(list);
 }
 
 function db_removeDictionaryItem(id) {
   var list = db_getDictionary();
   for (var i in list) {
-      if (list[i].id == id) {
-          list.splice(i, 1);
-          break;
-      }
+    var entry = list[i];
+    if (entry.id == id) {
+      list.splice(i, 1);
+      db_saveDictionary(list);
+      return;
+    }
   }
-  db_saveDictionary(list);
 }
