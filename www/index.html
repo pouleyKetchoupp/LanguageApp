@@ -30,7 +30,8 @@
           if (event.target.id == "pageDict")
           {
             dict_clear();
-            dict_addDictionary(dict_thai);
+            dict_addDictionary(dict_thai_dishes);
+            dict_addDictionary(dict_thai_test);
             dict_load();
           }
           else if (event.target.id == "pageQuiz")
@@ -59,6 +60,9 @@
       <div class="content" style="text-align: center">
         <p>Dictionary</p>
         <div style="text-align: center; margin-top: 30px;">
+          <ons-select id="dict_select" onchange="dict_select(event)">
+            <option value="new">New...</option>
+          </ons-select>
           <p>
             <ons-input id="dict_word1" modifier="underbar" placeholder="Type a word here" float></ons-input>
           </p>
@@ -115,25 +119,20 @@
   </ons-template>
 
   <template id="dict_itemTemplate">
-    <div class="left">
-	    Word 1
-    </div>
     <div class="center">
-	    Word 2
-    </div>
-    <div class="right">
-  	  <ons-button modifier="quiet" onclick="dict_removeWord(this.parentElement.parentElement)">
-  	    <ons-icon icon="ion-close-circled" class="list-item__icon"></ons-icon>
-  	  </ons-button>
-    </div>
-  </template>
-
-  <template id="dict_itemTemplate_nodelete">
-    <div class="left">
-      Word 1
-    </div>
-    <div class="center">
-	    Word 2
+      <ons-row>
+        <ons-col>
+        Word 1
+        </ons-col>
+        <ons-col>
+        Word 2
+        </ons-col>
+        <ons-col width="15%">
+          <ons-button modifier="quiet" onclick="dict_removeWord(this.parentElement.parentElement.parentElement.parentElement)">
+      	    <ons-icon icon="ion-close-circled" class="list-item__icon"></ons-icon>
+      	  </ons-button>
+        </ons-col>
+      </ons-row>
     </div>
   </template>
 
