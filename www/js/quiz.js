@@ -71,11 +71,6 @@ var quiz_validate = function() {
     quizResultElement.style.visibility='hidden';
   
     quiz_next();
-    
-    if (!quiz_started) {
-      var quizScoreElement = document.getElementById('quiz_score');
-      quizScoreElement.style.visibility='hidden';
-    }
   }
   else {
     // Check and show result
@@ -92,8 +87,11 @@ var quiz_validate = function() {
       quizResultText.innerText = "Correct!";
       ++quiz_score;
     }
-    else {
+    else if (answer) {
       quizResultText.innerText = "Wrong. The answer was: \n" + correctAnswer;
+    }
+    else {
+      quizResultText.innerText = "The answer was: \n" + correctAnswer;
     }
     
     quiz_validated = true;
