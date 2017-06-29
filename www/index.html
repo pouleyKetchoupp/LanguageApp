@@ -42,6 +42,10 @@
           {
             quiz_postStart();
           }
+          else if (event.target.id == "pageQuizSelect")
+          {
+            quiz_postSelect();
+          }
         });
     });
   </script>
@@ -97,15 +101,13 @@
         </div>
         <div class="center">New dictionary</div>
       </ons-toolbar>
-      <div class="content" style="text-align: center">
-        <div style="text-align: center; margin-top: 30px;">
-          <p>
-            <ons-input id="dict_add_name" modifier="underbar" placeholder="Enter a name here" float></ons-input>
-          </p>
-          <p style="margin-top: 30px;">
-            <ons-button onclick="dict_createDictionary()">Create</ons-button>
-          </p>
-        </div>
+      <div style="text-align: center; margin-top: 30px;">
+        <p>
+          <ons-input id="dict_add_name" modifier="underbar" placeholder="Enter a name here" float></ons-input>
+        </p>
+        <p style="margin-top: 30px;">
+          <ons-button onclick="dict_createDictionary()">Create</ons-button>
+        </p>
       </div>
     </ons-page>
   </ons-template>
@@ -178,6 +180,29 @@
     </ons-page>
   </ons-template>
 
+  <ons-template id="pageQuizSelectTemplate">
+    <ons-page id="pageQuizSelect">
+      <ons-toolbar>
+        <div class="left">
+          <ons-back-button>Back</ons-back-button>
+        </div>
+        <div class="center">Select dictionaries</div>
+      </ons-toolbar>
+      <div style="text-align: center; margin-top: 30px;">
+        <p style="margin-top: 30px;">
+          <ons-button onclick="quiz_selectNone()">Select none</ons-button>
+        </p>
+        <p style="margin-top: 30px;">
+          <ons-button onclick="quiz_selectAll()">Select all</ons-button>
+        </p>
+        <p>
+          <ons-list id="quiz_selectList">
+          </ons-list>
+        </p>
+      </div>
+    </ons-page>
+  </ons-template>
+
   <template id="dict_itemTemplate">
     <div class="center">
       <ons-row>
@@ -194,6 +219,15 @@
         </ons-col>
       </ons-row>
     </div>
+  </template>
+
+  <template id="quiz_dictItemTemplate">
+    <label class="left">
+      <ons-input type="checkbox" onclick="quiz_selectEntry(this.parentElement.parentElement)"></ons-checkbox>
+    </label>
+    <label class="center">
+      Dictionary name
+    </label>
   </template>
 
 </body>

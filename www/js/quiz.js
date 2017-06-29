@@ -1,4 +1,5 @@
 var quiz_list;
+var quiz_dict_ignore_list;
 
 var quiz_started = false;
 var quiz_validated = false;
@@ -10,6 +11,8 @@ var quiz_score = 0;
 
 var quiz_init = function() {
   console.log("quiz_init");
+  
+  quiz_dict_ignore_list = new Array();
   
   quiz_updateLanguages();
 }
@@ -43,22 +46,133 @@ var quiz_updateLanguages = function() {
 }
 
 var quiz_select = function() {
+  console.log("quiz_select");
+  
+  var navigatorElement = document.getElementById('quiz_navigator');
+  navigatorElement.pushPage('pageQuizSelectTemplate');
+}
+
+var quiz_postSelect = function() {
+  console.log("quiz_postSelect");
+  
+  // Initialize UI list
+  quiz_updateSelectUI();
+}
+
+var quiz_selectNone = function() {
+  console.log("quiz_selectNone");
+  
+  quiz_dict_ignore_list = new Array();
+  
+  for (var i in dict_list) {
+    var dictEntry = dict_list[i];
+    quiz_dict_ignore_list.push(dictEntry.id);
+  }
+  
+  // Update UI list
+  quiz_updateSelectUI();
+}
+
+var quiz_selectAll = function() {
+  console.log("quiz_selectAll");
+  
+  quiz_dict_ignore_list = new Array();
+  
+  // Update UI list
+  quiz_updateSelectUI();
+}
+
+var quiz_selectEntry = function(itemElement) {
+  console.log("quiz_selectEntry: " + itemElement.id);
+  
+  for (var i in quiz_dict_ignore_list) {
+    if (quiz_dict_ignore_list[i] == itemElement.id) {
+      // Ignored dictionary, remove from list
+      quiz_dict_ignore_list.splice(i, 1);
+      return;
+    }
+  }
+  
+  // Not ignored, add to list
+  quiz_dict_ignore_list.push(itemElement.id);
+}
+
+var quiz_clearSelectUI = function() {
+  var listElement = document.getElementById('quiz_selectList');
+  while (listElement.firstChild) {
+      listElement.removeChild(listElement.firstChild);
+  }
+}
+
+var quiz_updateSelectUI = function() {
+  quiz_clearSelectUI();
+  
+  for (var i in dict_list) {
+    var dictEntry = dict_list[i];
+      
+    var templateName = 'quiz_dictItemTemplate';
+    var itemTemplate = document.getElementById(templateName);
+  
+    var itemElement = document.createElement('ons-list-item');
+    itemElement.innerHTML = itemTemplate.innerHTML;
+    itemElement.id = dictEntry.id;
+    
+    var dictNameElement = itemElement.children[1];
+    dictNameElement.innerText = dictEntry.name;
+    
+    var ignoredDict = false;
+    for (var j in quiz_dict_ignore_list) {
+      if (quiz_dict_ignore_list[j] == dictEntry.id) {
+        ignoredDict = true;
+        break;
+      }
+    }
+    
+    if (!ignoredDict) {
+      var checkBoxElement = itemElement.children[0].children[0];
+      checkBoxElement.checked = true;
+    }
+    
+    var listElement = document.getElementById('quiz_selectList');
+    listElement.append(itemElement);
+  }
 }
 
 var quiz_start = function() {
-  console.log("quiz_start: entry count " + dict_word_list.length);
+  console.log("quiz_start: total entry count " + dict_word_list.length);
   
-  quiz_list = array_copy(dict_word_list);
-  quiz_list = array_shuffle(dict_word_list);
+  quiz_list = new Array();
   
-  if (quiz_started) {
-    quiz_postStart();
-  }
-  else {
-    var navigatorElement = document.getElementById('quiz_navigator');
-    navigatorElement.pushPage('pageQuizStartTemplate');
+  for (var i in dict_word_list) {
+    var wordEntry = dict_word_list[i];
     
-    quiz_started = true;
+    var ignoredDict = false;
+    for (var j in quiz_dict_ignore_list) {
+      if (quiz_dict_ignore_list[j] == wordEntry.dictId) {
+        ignoredDict = true;
+        break;
+      }
+    }
+    
+    if (!ignoredDict) {
+      quiz_list.push(wordEntry);
+    }
+  }
+  
+  console.log("quiz_start: filtered entry count " + quiz_list.length);
+  
+  if (quiz_list.length > 0) {
+    quiz_list = array_shuffle(quiz_list);
+    
+    if (quiz_started) {
+      quiz_postStart();
+    }
+    else {
+      var navigatorElement = document.getElementById('quiz_navigator');
+      navigatorElement.pushPage('pageQuizStartTemplate');
+      
+      quiz_started = true;
+    }
   }
 }
 
