@@ -11,15 +11,6 @@ var quiz_score = 0;
 var quiz_init = function() {
   console.log("quiz_init");
   
-  var quizElement = document.getElementById('quiz_main');
-  quizElement.style.visibility='hidden';
-  
-  var quizResultElement = document.getElementById('quiz_result');
-  quizResultElement.style.visibility='hidden';
-  
-  var quizScoreElement = document.getElementById('quiz_score');
-  quizScoreElement.style.visibility='hidden';
-  
   quiz_updateLanguages();
 }
 
@@ -60,16 +51,19 @@ var quiz_start = function() {
   quiz_list = array_copy(dict_word_list);
   quiz_list = array_shuffle(dict_word_list);
   
-  if (!quiz_started) {
-    var startElement = document.getElementById('quiz_start');
-    startElement.innerText = "Restart";
-    
-    var quizElement = document.getElementById('quiz_main');
-    quizElement.style.visibility='visible';
+  if (quiz_started) {
+    quiz_postStart();
+  }
+  else {
+    var navigatorElement = document.getElementById('quiz_navigator');
+    navigatorElement.pushPage('pageQuizStartTemplate');
     
     quiz_started = true;
   }
-    
+}
+
+var quiz_postStart = function() {
+  console.log("quiz_postStart");
   quiz_index = -1;
   
   quiz_score = 0;
@@ -78,10 +72,12 @@ var quiz_start = function() {
   var quizResultElement = document.getElementById('quiz_result');
   quizResultElement.style.visibility='hidden';
   
-  var quizScoreElement = document.getElementById('quiz_score');
-  quizScoreElement.style.visibility='visible';
-  
   quiz_next();
+}
+
+var quiz_stop = function() {
+  console.log("quiz_stop");
+  quiz_started = false;
 }
 
 var quiz_validate = function() {
@@ -143,13 +139,10 @@ var quiz_next = function() {
   }
   else {
     // End of quiz
-    var startElement = document.getElementById('quiz_start');
-    startElement.innerText = "Start";
+    quiz_stop();
     
-    var quizElement = document.getElementById('quiz_main');
-    quizElement.style.visibility='hidden';
-    
-    quiz_started = false;
+    var navigatorElement = document.getElementById('quiz_navigator');
+    navigatorElement.popPage();
   }
     
   var validateElement = document.getElementById('quiz_validate');

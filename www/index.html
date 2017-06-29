@@ -38,6 +38,10 @@
           {
             quiz_init();
           }
+          else if (event.target.id == "pageQuizStart")
+          {
+            quiz_postStart();
+          }
         });
     });
   </script>
@@ -91,10 +95,9 @@
         <div class="left">
           <ons-back-button onclick="dict_cancelDictionary()">Back</ons-back-button>
         </div>
-        <div class="center"></div>
+        <div class="center">New dictionary</div>
       </ons-toolbar>
       <div class="content" style="text-align: center">
-        <p>Create new dictionary</p>
         <div style="text-align: center; margin-top: 30px;">
           <p>
             <ons-input id="dict_add_name" modifier="underbar" placeholder="Enter a name here" float></ons-input>
@@ -116,7 +119,7 @@
   <ons-template id="pageQuizTemplate">
     <ons-page id="pageQuiz">
       <div class="content" style="text-align: center">
-        <p>Quiz</p>
+        <p>Quiz options</p>
         <div style="text-align: center; margin-top: 30px;">
           <p style="margin-top: 30px;">
             <ons-button id="quiz_select" onclick="quiz_select()">Select dictionaries</ons-button>
@@ -140,6 +143,19 @@
             <ons-button id="quiz_start" onclick="quiz_start()">Start</ons-button>
           </p>
         </div>
+      </div>
+    </ons-page>
+  </ons-template>
+
+  <ons-template id="pageQuizStartTemplate">
+    <ons-page id="pageQuizStart">
+      <ons-toolbar>
+        <div class="left">
+          <ons-back-button onclick="quiz_stop()">Back</ons-back-button>
+        </div>
+        <div class="center">Quiz</div>
+      </ons-toolbar>
+      <div class="content" style="text-align: center">
         <div id="quiz_main" style="text-align: center; margin-top: 30px;">
           <p id="quiz_title">Word 0 / 0</p>
           <p>
