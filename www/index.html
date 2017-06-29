@@ -50,10 +50,16 @@
     </ons-toolbar>
 
     <ons-tabbar position="auto">
-      <ons-tab page="pageDictTemplate" label="Dictionary" icon="square" active></ons-tab>
+      <ons-tab page="pageDictNavigatorTemplate" label="Dictionary" icon="square" active></ons-tab>
       <ons-tab page="pageQuizTemplate" label="Quiz" icon="square"></ons-tab>
     </ons-tabbar>
   </ons-page>
+
+  <ons-template id="pageDictNavigatorTemplate">
+    <ons-page id="pageDictNavigator">
+      <ons-navigator id="dict_navigator" page="pageDictTemplate"></ons-navigator>
+    </ons-page>
+  </ons-template>
 
   <ons-template id="pageDictTemplate">
     <ons-page id="pageDict">
@@ -74,6 +80,28 @@
           </p>
           <ons-list id="dict_list">
           </ons-list>
+        </div>
+      </div>
+    </ons-page>
+  </ons-template>
+
+  <ons-template id="pageAddDictTemplate">
+    <ons-page id="pageAddDict">
+      <ons-toolbar>
+        <div class="left">
+          <ons-back-button onclick="dict_cancelDictionary()">Back</ons-back-button>
+        </div>
+        <div class="center"></div>
+      </ons-toolbar>
+      <div class="content" style="text-align: center">
+        <p>Create new dictionary</p>
+        <div style="text-align: center; margin-top: 30px;">
+          <p>
+            <ons-input id="dict_add_name" modifier="underbar" placeholder="Enter a name here" float></ons-input>
+          </p>
+          <p style="margin-top: 30px;">
+            <ons-button onclick="dict_createDictionary()">Create</ons-button>
+          </p>
         </div>
       </div>
     </ons-page>

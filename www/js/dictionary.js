@@ -1,4 +1,5 @@
 var dict_list;
+var dict_id_list;
 
 var dict_id = null;
 
@@ -7,6 +8,28 @@ var dict_load = function() {
   for (var i in loadedDict) {
       var loadedEntry = loadedDict[i];
       dict_list.push(loadedEntry);
+      
+      var dictFound = false;
+      for (var i in dict_id_list) {
+        var dictId = dict_id_list[i];
+        if (dictId == loadedEntry.dictId) {
+          dictFound = true;
+          break;
+        }
+      }
+      
+      if (!dictFound) {
+        var dictName = loadedEntry.dictId.slice(10);
+        var newDict = {
+          id: loadedEntry.dictId,
+          name: dictName,
+          language1: "English",
+          language2: "Thai",
+          data: []
+        }
+        
+        dict_addDictionary(newDict);
+      }
   }
   
   console.log("dict_load: found " + loadedDict.length);
@@ -20,6 +43,7 @@ var dict_clear = function() {
   console.log("dict_clear");
   
   dict_list = new Array();
+  dict_id_list = new Array();
   
   dict_clearUI();
   
@@ -31,12 +55,55 @@ var dict_clear = function() {
 
 var dict_select = function(event) {
   console.log("dict_select: " + event.target.value);
-  dict_id = event.target.value;
+  
+  if (event.target.value == "new") {
+    var navigatorElement = document.getElementById('dict_navigator');
+    navigatorElement.pushPage('pageAddDictTemplate');
+  }
+  else {
+    dict_id = event.target.value;
+    dict_updateUI();
+  }
+}
+
+var dict_createDictionary = function(event) {
+  var dictAddNameElement = document.getElementById('dict_add_name');
+  var dictName = dictAddNameElement.value;
+  
+  var newDict = {
+    id: "dict_user_" + dictName,
+    name: dictName,
+    language1: "English",
+    language2: "Thai",
+    data: []
+  }
+  
+  dict_addDictionary(newDict);
+  
+  var navigatorElement = document.getElementById('dict_navigator');
+  navigatorElement.popPage();
+  
+  var selectDictElement = document.getElementById('dict_select');
+  var numEntries = selectDictElement.children[0].children.length;
+  selectDictElement.selectedIndex = numEntries - 1;
+  dict_id = newDict.id;
+  dict_updateUI();
+}
+
+var dict_cancelDictionary = function(event) {
+  var selectDictElement = document.getElementById('dict_select');
+  selectDictElement.selectedIndex = 1;
+  dict_id = dict_id_list[0];
   dict_updateUI();
 }
 
 var dict_addDictionary = function(dictionary) {
-  console.log("dict_addDictionary: '" + dictionary.name + "' found " + dictionary.data.length);
+  console.log("dict_addDictionary: '" 
+    + dictionary.name 
+    + "' (id='"
+    + dictionary.id
+    + "') found " 
+    + dictionary.data.length);
   
   // Add dictionary to selection
   var optionElement = document.createElement('option');
@@ -45,6 +112,8 @@ var dict_addDictionary = function(dictionary) {
   
   var selectDictElement = document.getElementById('dict_select');
   selectDictElement.children[0].append(optionElement);
+  
+  dict_id_list.push(dictionary.id);
     
   // Add all words from dictionary to list
   var prevDictId = dict_id;
@@ -138,7 +207,7 @@ var dict_removeWord = function(itemElement) {
   if (itemElement.id > 0) {
     // Remove from global list
     for (var i in dict_list) {
-      var entry = list[i];
+      var entry = dict_list[i];
       if (entry.id == itemElement.id) {
         dict_list.splice(i, 1);
         break;
