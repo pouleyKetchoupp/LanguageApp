@@ -51,7 +51,7 @@
 
     <ons-tabbar position="auto">
       <ons-tab page="pageDictNavigatorTemplate" label="Dictionary" icon="square" active></ons-tab>
-      <ons-tab page="pageQuizTemplate" label="Quiz" icon="square"></ons-tab>
+      <ons-tab page="pageQuizNavigatorTemplate" label="Quiz" icon="square"></ons-tab>
     </ons-tabbar>
   </ons-page>
 
@@ -78,7 +78,7 @@
           <p style="margin-top: 30px;">
             <ons-button onclick="dict_addWord()">Add word</ons-button>
           </p>
-          <ons-list id="dict_list">
+          <ons-list id="dict_word_list">
           </ons-list>
         </div>
       </div>
@@ -107,21 +107,37 @@
     </ons-page>
   </ons-template>
 
+  <ons-template id="pageQuizNavigatorTemplate">
+    <ons-page id="pageQuizNavigator">
+      <ons-navigator id="quiz_navigator" page="pageQuizTemplate"></ons-navigator>
+    </ons-page>
+  </ons-template>
+
   <ons-template id="pageQuizTemplate">
     <ons-page id="pageQuiz">
       <div class="content" style="text-align: center">
         <p>Quiz</p>
         <div style="text-align: center; margin-top: 30px;">
           <p style="margin-top: 30px;">
+            <ons-button id="quiz_select" onclick="quiz_select()">Select dictionaries</ons-button>
+          </p>
+          <p style="margin-top: 30px;">
             <ons-row>
-              <ons-col style="text-align: center; margin-left: 30px;">
-                <ons-button id="quiz_swap" onclick="quiz_swap()">Swap</ons-button>
+              <ons-col id="quiz_language1" style="text-align: center; margin-left: 30px;" vertical-align="center">
+                Language1
               </ons-col>
-              <ons-col style="text-align: center; margin-right: 30px;">
-                <ons-button id="quiz_start" onclick="quiz_start()">Start</ons-button>
+              <ons-col style="text-align: center;">
+                <ons-button id="quiz_swap" onclick="quiz_swap()">
+                  Swap
+                </ons-button>
+              </ons-col>
+              <ons-col id="quiz_language2" style="text-align: center; margin-right: 30px;" vertical-align="center">
+                Language2
               </ons-col>
             </ons-row>
-            </section>
+          </p>
+          <p style="margin-top: 30px;">
+            <ons-button id="quiz_start" onclick="quiz_start()">Start</ons-button>
           </p>
         </div>
         <div id="quiz_main" style="text-align: center; margin-top: 30px;">

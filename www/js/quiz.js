@@ -19,11 +19,15 @@ var quiz_init = function() {
   
   var quizScoreElement = document.getElementById('quiz_score');
   quizScoreElement.style.visibility='hidden';
+  
+  quiz_updateLanguages();
 }
 
 var quiz_swap = function() {
   console.log("quiz_swap: " + (quiz_swapped ? "regular" : "swapped"));
   quiz_swapped = !quiz_swapped;
+  
+  quiz_updateLanguages();
   
   if (quiz_started) {
     // Restart
@@ -31,11 +35,30 @@ var quiz_swap = function() {
   }
 }
 
-var quiz_start = function() {
-  console.log("quiz_start: entry count " + dict_list.length);
+var quiz_updateLanguages = function() {
+  var languageElement1 = document.getElementById('quiz_language1');
+  var languageElement2 = document.getElementById('quiz_language2');
   
-  quiz_list = array_copy(dict_list);
-  quiz_list = array_shuffle(quiz_list);
+  var dictionary = dict_list[0];
+  
+  if (quiz_swapped) {
+    languageElement1.innerText = dictionary.language2;
+    languageElement2.innerText = dictionary.language1;
+  }
+  else {
+    languageElement1.innerText = dictionary.language1;
+    languageElement2.innerText = dictionary.language2;
+  }
+}
+
+var quiz_select = function() {
+}
+
+var quiz_start = function() {
+  console.log("quiz_start: entry count " + dict_word_list.length);
+  
+  quiz_list = array_copy(dict_word_list);
+  quiz_list = array_shuffle(dict_word_list);
   
   if (!quiz_started) {
     var startElement = document.getElementById('quiz_start');

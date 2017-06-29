@@ -1,5 +1,5 @@
+var dict_word_list;
 var dict_list;
-var dict_id_list;
 
 var dict_id = null;
 
@@ -7,12 +7,12 @@ var dict_load = function() {
   var loadedDict = db_getDictionary();
   for (var i in loadedDict) {
       var loadedEntry = loadedDict[i];
-      dict_list.push(loadedEntry);
+      dict_word_list.push(loadedEntry);
       
       var dictFound = false;
-      for (var i in dict_id_list) {
-        var dictId = dict_id_list[i];
-        if (dictId == loadedEntry.dictId) {
+      for (var i in dict_list) {
+        var dictEntry = dict_list[i];
+        if (dictEntry.id == loadedEntry.dictId) {
           dictFound = true;
           break;
         }
@@ -42,8 +42,8 @@ var dict_load = function() {
 var dict_clear = function() {
   console.log("dict_clear");
   
+  dict_word_list = new Array();
   dict_list = new Array();
-  dict_id_list = new Array();
   
   dict_clearUI();
   
@@ -93,7 +93,7 @@ var dict_createDictionary = function(event) {
 var dict_cancelDictionary = function(event) {
   var selectDictElement = document.getElementById('dict_select');
   selectDictElement.selectedIndex = 1;
-  dict_id = dict_id_list[0];
+  dict_id = dict_list[0].id;
   dict_updateUI();
 }
 
@@ -113,7 +113,7 @@ var dict_addDictionary = function(dictionary) {
   var selectDictElement = document.getElementById('dict_select');
   selectDictElement.children[0].append(optionElement);
   
-  dict_id_list.push(dictionary.id);
+  dict_list.push(dictionary);
     
   // Add all words from dictionary to list
   var prevDictId = dict_id;
@@ -149,7 +149,7 @@ var dict_addWordInternal = function(word1, word2, user) {
     if (!user || !db_hasDictionaryItem(word1, word2)) {
       var dictEntry = dict_createEntry(word1, word2, dict_id, user);
       
-      dict_list.push(dictEntry);
+      dict_word_list.push(dictEntry);
       
       if (user) {
         db_addDictionaryItem(dictEntry);
@@ -165,8 +165,8 @@ var dict_addWordInternal = function(word1, word2, user) {
 var dict_updateUI = function() {
   dict_clearUI();
   
-  for (var i in dict_list) {
-    var dictEntry = dict_list[i];
+  for (var i in dict_word_list) {
+    var dictEntry = dict_word_list[i];
     if (dictEntry.dictId == dict_id) {
       dict_addWordUI(dictEntry.id, dictEntry.word1, dictEntry.word2, dictEntry.user);
     }
@@ -174,7 +174,7 @@ var dict_updateUI = function() {
 }
 
 var dict_clearUI = function() {
-  var listElement = document.getElementById('dict_list');
+  var listElement = document.getElementById('dict_word_list');
   while (listElement.firstChild) {
       listElement.removeChild(listElement.firstChild);
   }
@@ -199,17 +199,17 @@ var dict_addWordUI = function(id, word1, word2, canDelete) {
     deleteElement.style.visibility='hidden';
   }
   
-  var listElement = document.getElementById('dict_list');
+  var listElement = document.getElementById('dict_word_list');
   listElement.append(itemElement);
 }
 
 var dict_removeWord = function(itemElement) {
   if (itemElement.id > 0) {
     // Remove from global list
-    for (var i in dict_list) {
-      var entry = dict_list[i];
+    for (var i in dict_word_list) {
+      var entry = dict_word_list[i];
       if (entry.id == itemElement.id) {
-        dict_list.splice(i, 1);
+        dict_word_list.splice(i, 1);
         break;
       }
     }
@@ -218,7 +218,7 @@ var dict_removeWord = function(itemElement) {
     db_removeDictionaryItem(itemElement.id);
     
     // Remove from UI
-    var listElement = document.getElementById('dict_list');
+    var listElement = document.getElementById('dict_word_list');
     listElement.removeChild(itemElement);
   }
 }
