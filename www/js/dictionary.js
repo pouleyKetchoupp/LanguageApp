@@ -37,6 +37,14 @@ var dict_load = function() {
   var selectDictElement = document.getElementById('dict_select');
   selectDictElement.selectedIndex = 1;
   dict_updateUI();
+  
+  var firstDictEntry = dict_list[0];
+  
+  var dictLanguageElement1 = document.getElementById('dict_language1');
+  dictLanguageElement1.innerText = firstDictEntry.language1 + ":";
+  
+  var dictLanguageElement2 = document.getElementById('dict_language2');
+  dictLanguageElement2.innerText = firstDictEntry.language2 + ":";
 }
 
 var dict_clear = function() {
