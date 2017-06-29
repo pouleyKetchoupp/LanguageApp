@@ -15,6 +15,8 @@ var quiz_init = function() {
   quiz_dict_ignore_list = new Array();
   
   quiz_updateLanguages();
+  
+  quiz_updateNumSelected();
 }
 
 var quiz_swap = function() {
@@ -89,12 +91,14 @@ var quiz_selectEntry = function(itemElement) {
     if (quiz_dict_ignore_list[i] == itemElement.id) {
       // Ignored dictionary, remove from list
       quiz_dict_ignore_list.splice(i, 1);
+      quiz_updateNumSelected();
       return;
     }
   }
   
   // Not ignored, add to list
   quiz_dict_ignore_list.push(itemElement.id);
+  quiz_updateNumSelected();
 }
 
 var quiz_clearSelectUI = function() {
@@ -135,7 +139,16 @@ var quiz_updateSelectUI = function() {
     
     var listElement = document.getElementById('quiz_selectList');
     listElement.append(itemElement);
+    
+    quiz_updateNumSelected();
   }
+}
+
+var quiz_updateNumSelected = function() {
+  var selectTextElement = document.getElementById('quiz_selectText');
+  var numDictionaries = dict_list.length;
+  var numSelected = numDictionaries - quiz_dict_ignore_list.length;
+  selectTextElement.innerText = "Selected: " + numSelected + " / " + numDictionaries;
 }
 
 var quiz_start = function() {
