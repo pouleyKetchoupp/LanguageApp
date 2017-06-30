@@ -173,11 +173,22 @@ var dict_addWordInternal = function(word1, word2, user) {
 var dict_updateUI = function() {
   dict_clearUI();
   
+  var sortedList = new Array();
+  
   for (var i in dict_word_list) {
     var dictEntry = dict_word_list[i];
     if (dictEntry.dictId == dict_id) {
-      dict_addWordUI(dictEntry.id, dictEntry.word1, dictEntry.word2, dictEntry.user);
+      sortedList.push(dictEntry);
     }
+  }
+  
+  sortedList.sort(function(entry1, entry2) {
+    return entry1.word1.localeCompare(entry2.word1);
+  });
+  
+  for (var i in sortedList) {
+    var dictEntry = sortedList[i];
+    dict_addWordUI(dictEntry.id, dictEntry.word1, dictEntry.word2, dictEntry.user);
   }
 }
 
