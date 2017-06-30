@@ -229,7 +229,7 @@ var quiz_validate = function() {
     quizResultElement.style.visibility='visible';
     
     var quizResultText = document.getElementById('quiz_result_text');
-    if (answer == correctAnswer) {
+    if (answer.toLowerCase() == correctAnswer.toLowerCase()) {
       quizResultText.innerText = "Correct!";
       ++quiz_score;
     }

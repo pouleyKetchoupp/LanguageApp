@@ -20,7 +20,8 @@ function db_hasDictionaryItem(word1, word2) {
   var list = db_getDictionary();
   for (var i in list) {
     var entry = list[i];
-    if (entry.word1 == word1 && entry.word2 == word2) {
+    if ((entry.word1.toLowerCase() == word1.toLowerCase())
+      && (entry.word2.toLowerCase() == word2.toLowerCase())) {
       return true;
     }
   }
