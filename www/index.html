@@ -25,28 +25,28 @@
       });
     ons.ready(function() {
         console.log("Onsen UI is ready!");
+    });
         
-        document.addEventListener('init', function(event) {
-          if (event.target.id == "pageDict")
-          {
-            dict_clear();
-            dict_addDictionary(dict_thai_dishes);
-            dict_addDictionary(dict_thai_test);
-            dict_load();
-          }
-          else if (event.target.id == "pageQuiz")
-          {
-            quiz_init();
-          }
-          else if (event.target.id == "pageQuizStart")
-          {
-            quiz_postStart();
-          }
-          else if (event.target.id == "pageQuizSelect")
-          {
-            quiz_postSelect();
-          }
-        });
+    document.addEventListener('init', function(event) {
+      if (event.target.id == "pageDict")
+      {
+        dict_clear();
+        dict_addDictionary(dict_thai_dishes);
+        dict_addDictionary(dict_thai_test);
+        dict_load();
+      }
+      else if (event.target.id == "pageQuiz")
+      {
+        quiz_init();
+      }
+      else if (event.target.id == "pageQuizStart")
+      {
+        quiz_postStart();
+      }
+      else if (event.target.id == "pageQuizSelect")
+      {
+        quiz_postSelect();
+      }
     });
   </script>
   
@@ -54,7 +54,7 @@
 <body>
   <ons-page ng-controller="AppController as app">
     <ons-toolbar>
-      <div class="center">Language</div>
+      <div class="center">Torri's Thai Learning</div>
     </ons-toolbar>
 
     <ons-tabbar position="auto">
