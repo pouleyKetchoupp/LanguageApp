@@ -80,6 +80,25 @@ var dict_createDictionary = function(event) {
   var dictAddNameElement = document.getElementById('dict_add_name');
   var dictName = dictAddNameElement.value;
   
+  var addMessageElement = document.getElementById('dict_add_message');
+    
+  // Cancel if the name is empty
+  if (!dictName) {
+    addMessageElement.innerText = "Please enter a dictionary name.";
+    return;
+  }
+  
+  // Cancel if the name is already taken
+  for (var i in dict_list) {
+    var dictEntry = dict_list[i];
+    if (dictEntry.name == dictName) {
+      addMessageElement.innerText = "This dictionary name is already taken.";
+      return;
+    }
+  }
+  
+  addMessageElement.innerText = null;
+    
   var newDict = {
     id: "dict_user_" + dictName,
     name: dictName,
