@@ -124,8 +124,20 @@ var quiz_clearSelectUI = function() {
 var quiz_updateSelectUI = function() {
   quiz_clearSelectUI();
   
+  // Sort all dictionaries alphabetically
+  var sortedList = new Array();
+  
   for (var i in dict_list) {
-    var dictEntry = dict_list[i];
+    var dictionary = dict_list[i];
+    sortedList.push(dictionary);
+  }
+  
+  sortedList.sort(function(entry1, entry2) {
+    return entry1.name.localeCompare(entry2.name);
+  });
+  
+  for (var i in sortedList) {
+    var dictEntry = sortedList[i];
       
     var templateName = 'quiz_dictItemTemplate';
     var itemTemplate = document.getElementById(templateName);
