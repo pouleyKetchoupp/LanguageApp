@@ -173,7 +173,26 @@ var quiz_updateNumSelected = function() {
   var selectTextElement = document.getElementById('quiz_selectText');
   var numDictionaries = dict_list.length;
   var numSelected = numDictionaries - quiz_dict_ignore_list.length;
-  selectTextElement.innerText = "Selected: " + numSelected + " / " + numDictionaries;
+  
+  var numWords = 0;
+  for (var i in dict_word_list) {
+    var wordEntry = dict_word_list[i];
+    
+    var ignoredDict = false;
+    for (var j in quiz_dict_ignore_list) {
+      if (quiz_dict_ignore_list[j] == wordEntry.dictId) {
+        ignoredDict = true;
+        break;
+      }
+    }
+    
+    if (!ignoredDict) {
+      ++numWords;
+    }
+  }
+  
+  selectTextElement.innerText = "Selected: " + numSelected + " / " + numDictionaries
+                                + " (" + numWords + " words)";
 }
 
 var quiz_start = function() {
