@@ -19,6 +19,12 @@ var quiz_init = function() {
   quiz_updateNumSelected();
 }
 
+var quiz_show = function() {
+  console.log("quiz_show");
+  
+  quiz_updateNumSelected();
+}
+
 var quiz_swap = function() {
   console.log("quiz_swap: " + (quiz_swapped ? "regular" : "swapped"));
   quiz_swapped = !quiz_swapped;
@@ -58,6 +64,13 @@ var quiz_postSelect = function() {
   console.log("quiz_postSelect");
   
   // Initialize UI list
+  quiz_updateSelectUI();
+}
+
+var quiz_showSelect = function() {
+  console.log("quiz_showSelect");
+  
+  // Update UI list
   quiz_updateSelectUI();
 }
 

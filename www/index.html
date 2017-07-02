@@ -48,6 +48,17 @@
         quiz_postSelect();
       }
     });
+        
+    document.addEventListener('show', function(event) {
+      if (event.target.id == "pageQuiz")
+      {
+        quiz_show();
+      }
+      else if (event.target.id == "pageQuizSelect")
+      {
+        quiz_showSelect();
+      }
+    });
   </script>
   
 </head>
