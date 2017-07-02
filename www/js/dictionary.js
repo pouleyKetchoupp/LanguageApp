@@ -36,6 +36,8 @@ var dict_load = function() {
   
   var selectDictElement = document.getElementById('dict_select');
   selectDictElement.selectedIndex = 1;
+  var selectDictOptions = selectDictElement.children[0];
+  dict_id = selectDictOptions[1].value;
   dict_updateUI();
   
   var firstDictEntry = dict_list[0];
@@ -92,8 +94,14 @@ var dict_createDictionary = function(event) {
   navigatorElement.popPage();
   
   var selectDictElement = document.getElementById('dict_select');
-  var numEntries = selectDictElement.children[0].children.length;
-  selectDictElement.selectedIndex = numEntries - 1;
+  var selectDictOptions = selectDictElement.children[0];
+  for (var i in selectDictOptions) {
+    var optionElement = selectDictOptions[i];
+    if (optionElement.value == newDict.id) {
+      selectDictElement.selectedIndex = i;
+      break;
+    }
+  }
   dict_id = newDict.id;
   dict_updateUI();
 }
@@ -114,14 +122,10 @@ var dict_addDictionary = function(dictionary) {
     + dictionary.data.length);
   
   // Add dictionary to selection
-  var optionElement = document.createElement('option');
-  optionElement.innerText = dictionary.name;
-  optionElement.value = dictionary.id;
-  
-  var selectDictElement = document.getElementById('dict_select');
-  selectDictElement.children[0].append(optionElement);
-  
   dict_list.push(dictionary);
+  
+  // Update drop-down list
+  dict_updateDictionaryListUI();
     
   // Add all words from dictionary to list
   var prevDictId = dict_id;
@@ -134,6 +138,38 @@ var dict_addDictionary = function(dictionary) {
   
   if (null != prevDictId) {
     dict_id = prevDictId;
+  }
+}
+
+var dict_updateDictionaryListUI = function() {
+  // Clear all current dictionaries except the first one
+  var selectDictElement = document.getElementById('dict_select');
+  var selectDictOptions = selectDictElement.children[0];
+  while (selectDictOptions.children.length > 1) {
+      selectDictOptions.removeChild(selectDictOptions.lastChild);
+  }
+  
+  // Sort all dictionaries alphabetically
+  var sortedList = new Array();
+  
+  for (var i in dict_list) {
+    var dictionary = dict_list[i];
+    sortedList.push(dictionary);
+  }
+  
+  sortedList.sort(function(entry1, entry2) {
+    return entry1.name.localeCompare(entry2.name);
+  });
+  
+  // Add all dictionaries to drop-down list
+  for (var i in sortedList) {
+    var dictionary = sortedList[i];
+    
+    var optionElement = document.createElement('option');
+    optionElement.innerText = dictionary.name;
+    optionElement.value = dictionary.id;
+    
+    selectDictOptions.append(optionElement);
   }
 }
 
