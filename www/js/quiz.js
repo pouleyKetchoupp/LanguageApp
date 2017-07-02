@@ -318,23 +318,26 @@ var quiz_stop = function() {
 var quiz_validate = function() {
   console.log("quiz_validate");
   
+  var answerElement = document.getElementById('quiz_answer');
+    
   var quizResultElement = document.getElementById('quiz_result');
   
   if (quiz_validated) {
     // Hide result and go next
     quizResultElement.style.visibility='hidden';
+    answerElement.removeAttribute("readonly");
   
     quiz_next();
   }
   else {
     // Check and show result
-    var answerElement = document.getElementById('quiz_answer');
+    quizResultElement.style.visibility='visible';
+    answerElement.setAttribute("readonly");
+    
     var answer = answerElement.value.toLowerCase();
     
     var quizEntry = quiz_list[quiz_index];
     var correctAnswers = quizEntry.answers;
-    
-    quizResultElement.style.visibility='visible';
     
     var quizResultText = document.getElementById('quiz_result_text');
     
