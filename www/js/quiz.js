@@ -206,7 +206,7 @@ var quiz_updateNumSelected = function() {
 var quiz_start = function() {
   console.log("quiz_start: total entry count " + dict_word_list.length);
   
-  quiz_list = new Array();
+  var filteredWordList = new Array();
   
   for (var i in dict_word_list) {
     var wordEntry = dict_word_list[i];
@@ -220,13 +220,65 @@ var quiz_start = function() {
     }
     
     if (!ignoredDict) {
-      quiz_list.push(wordEntry);
+      filteredWordList.push(wordEntry);
     }
   }
   
-  console.log("quiz_start: filtered entry count " + quiz_list.length);
+  console.log("quiz_start: filtered entry count " + filteredWordList.length);
   
-  if (quiz_list.length > 0) {
+  if (filteredWordList.length > 0) {
+  
+    // Sort alphabetically to find duplicates
+    filteredWordList.sort(function(entry1, entry2) {
+      if (quiz_swapped) {
+        return entry1.word2.localeCompare(entry2.word2);
+      }
+      else {
+        return entry1.word1.localeCompare(entry2.word1);
+      }
+    });
+    
+    // Make quiz list with unique words
+    quiz_list = new Array();
+    
+    for (var i in filteredWordList) {
+      var quizWordEntry = filteredWordList[i];
+      var quizQuestion = quiz_swapped ? quizWordEntry.word2 : quizWordEntry.word1;
+      var quizAnswer = quiz_swapped ? quizWordEntry.word1 : quizWordEntry.word2;
+      
+      if (quiz_list.length > 0) {
+        var prevQuizEntry = quiz_list[quiz_list.length - 1];
+        var prevQuizQuestion = prevQuizEntry.question;
+        
+        if (quizQuestion.toLowerCase() == prevQuizQuestion.toLowerCase()) {
+          
+          // Check for same answer, ignore entry in this case
+          var foundQuizAnswer = false;
+          for (var j in prevQuizEntry.answers) {
+            var prevQuizAnswer = prevQuizEntry.answers[j];
+            if (quizAnswer.toLowerCase() == prevQuizAnswer.toLowerCase()) {
+              foundQuizAnswer = true;
+              break;
+            }
+          }
+          
+          if (!foundQuizAnswer) {
+            // Add new possible answer to list
+            prevQuizEntry.answers.push(quizAnswer);
+          }
+          
+          continue;
+        }
+      }
+      
+      // Add new entry
+      var quizEntry = { question: quizQuestion, answers: [quizAnswer]};
+      quiz_list.push(quizEntry);
+    }
+  
+    console.log("quiz_start: unique entry count " + quiz_list.length);
+  
+    // Randomize remaining words
     quiz_list = array_shuffle(quiz_list);
     
     if (quiz_started) {
@@ -277,24 +329,55 @@ var quiz_validate = function() {
   else {
     // Check and show result
     var answerElement = document.getElementById('quiz_answer');
-    var answer = answerElement.value;
+    var answer = answerElement.value.toLowerCase();
     
     var quizEntry = quiz_list[quiz_index];
-    var correctAnswer = quiz_swapped ? quizEntry.word1 : quizEntry.word2;
+    var correctAnswers = quizEntry.answers;
     
     quizResultElement.style.visibility='visible';
     
     var quizResultText = document.getElementById('quiz_result_text');
-    if (answer.toLowerCase() == correctAnswer.toLowerCase()) {
-      quizResultText.innerText = "Correct!";
-      ++quiz_score;
+    
+    var isAnswerCorrect = false;
+    for (var i in correctAnswers) {
+      var possibleAnswer = correctAnswers[i];
+      if (answer == possibleAnswer.toLowerCase()) {
+        isAnswerCorrect = true;
+      }
     }
-    else if (answer) {
-      quizResultText.innerText = "Wrong. The answer was: \n" + correctAnswer;
+    
+    var resultText;
+    
+    if (isAnswerCorrect) {
+      resultText = "<span style=\"color: #00ff00\">Correct!</span>";
+      ++quiz_score;
+      
+      if (correctAnswers.length > 1) {
+        resultText += " Possible answers:<p>" + correctAnswers[0];
+        for (var i = 1; i < correctAnswers.length; ++i) {
+         resultText += ", " + correctAnswers[i];
+        }
+        resultText += "</p>";
+      }
     }
     else {
-      quizResultText.innerText = "The answer was: \n" + correctAnswer;
+      if (correctAnswers.length > 1) {
+        resultText = " Possible answers:<p>" + correctAnswers[0];
+        for (var i = 1; i < correctAnswers.length; ++i) {
+         resultText += ", " + correctAnswers[i];
+        }
+        resultText += "</p>";
+      }
+      else {
+        resultText = " The answer was:<p>" + correctAnswers[0] + "</p>";
+      }
+    
+      if (answer) {
+        resultText = "<span style=\"color: #ff0000\">Wrong.</span>" + resultText;
+      }
     }
+    
+    quizResultText.innerHTML = resultText;
     
     quiz_validated = true;
     
@@ -315,7 +398,7 @@ var quiz_next = function() {
     var quizEntry = quiz_list[quiz_index];
     
     var questionElement = document.getElementById('quiz_question');
-    questionElement.value = quiz_swapped ? quizEntry.word2 : quizEntry.word1;
+    questionElement.value = quizEntry.question;
     
     var titleElement = document.getElementById('quiz_title');
     titleElement.innerText = "Word " + (quiz_index + 1) + " / " + quiz_list.length + " :";
