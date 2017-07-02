@@ -56,6 +56,9 @@ var quiz_updateLanguages = function() {
 var quiz_select = function() {
   console.log("quiz_select");
   
+  var quizStartMessageElement = document.getElementById('quiz_start_message');
+  quizStartMessageElement.innerText = null;
+    
   var navigatorElement = document.getElementById('quiz_navigator');
   navigatorElement.pushPage('pageQuizSelectTemplate');
 }
@@ -235,6 +238,10 @@ var quiz_start = function() {
       
       quiz_started = true;
     }
+  }
+  else {
+    var quizStartMessageElement = document.getElementById('quiz_start_message');
+    quizStartMessageElement.innerText = "You need to select at least one dictionary which is not empty.";
   }
 }
 
