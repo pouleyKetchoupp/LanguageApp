@@ -170,7 +170,6 @@ var quiz_updateSelectUI = function() {
 }
 
 var quiz_updateNumSelected = function() {
-  var selectTextElement = document.getElementById('quiz_selectText');
   var numDictionaries = dict_list.length;
   var numSelected = numDictionaries - quiz_dict_ignore_list.length;
   
@@ -191,8 +190,14 @@ var quiz_updateNumSelected = function() {
     }
   }
   
+  var selectTextElement = document.getElementById('quiz_selectText');
   selectTextElement.innerText = "Selected: " + numSelected + " / " + numDictionaries
                                 + " (" + numWords + " words)";
+                                
+  var selectTextElement2 = document.getElementById('quiz_selectText2');
+  if (selectTextElement2) {
+    selectTextElement2.innerText = selectTextElement.innerText;
+  }
 }
 
 var quiz_start = function() {
