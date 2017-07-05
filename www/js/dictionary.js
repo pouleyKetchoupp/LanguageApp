@@ -238,6 +238,17 @@ var dict_updateUI = function() {
   }
   
   sortedList.sort(function(entry1, entry2) {
+    
+    // Specific sorting for numbers
+    var entryNum1 = parseInt(entry1.word1);
+    if (!isNaN(entryNum1)) {
+      var entryNum2 = parseInt(entry2.word1);
+      if (!isNaN(entryNum2)) {
+        return (entryNum1 - entryNum2);
+      }
+    }
+    
+    // Default string sorting
     return entry1.word1.localeCompare(entry2.word1);
   });
   
