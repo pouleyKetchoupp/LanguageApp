@@ -138,3 +138,26 @@ var dict_thai_numbers = {
     ["1000000", "หนึ่งล้าน"],
   ]
 }
+
+var dict_thai_drinks = {
+  id: "dict_thai_taste",
+  name: "Taste",
+  language1: "English",
+  language2: "Thai",
+  data: [
+    ["Sweet", "หวาน"],
+    ["Sour", "เปรี้ยว"],
+    ["Salty", "เค็ม"],
+    ["Bitter", "ขม"],
+    ["Spicy", "เผ็ด"],
+    ["Nutty", "มัน"],
+    ["Bland", "จืด"],
+    ["Crispy", "กรอบ"],
+    ["Delicious", "อร่อย"],
+    ["Delicious", "ถูกปาก"],
+    ["Not delicious", "ไม่ถูกปาก"],
+    ["Falvorful", "กลมกล่อม"],
+    ["Good smell", "หอม"],
+    ["Bad smell", "เหม็น"],
+  ]
+}
