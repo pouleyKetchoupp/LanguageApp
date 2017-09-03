@@ -96,7 +96,7 @@
                 Language:
               </ons-col>
               <ons-col style="text-align: left; margin-right: 10px;">
-                <ons-input id="dict_word1" modifier="underbar" placeholder="Type a word here" float></ons-input>
+                <ons-input id="dict_word1" modifier="underbar" placeholder="Type a word here" onkeypress="dict_keypress1(event);" float />
               </ons-col>
             </ons-row>
           </p>
@@ -106,12 +106,12 @@
                 Language:
               </ons-col>
               <ons-col style="text-align: left; margin-right: 10px;">
-                <ons-input id="dict_word2" modifier="underbar" placeholder="Type a word here" float></ons-input>
+                <ons-input id="dict_word2" modifier="underbar" placeholder="Type a word here" onkeypress="dict_keypress2(event);" float />
               </ons-col>
             </ons-row>
           </p>
           <p style="margin-top: 10px;">
-            <ons-button onclick="dict_addWord()">Add word</ons-button>
+            <ons-button id="dict_word_button" onclick="dict_addWord()">Add word</ons-button>
           </p>
           <ons-list id="dict_word_list">
           </ons-list>
@@ -130,7 +130,7 @@
       </ons-toolbar>
       <div style="text-align: center; margin-top: 30px;">
         <p>
-          <ons-input id="dict_add_name" modifier="underbar" placeholder="Enter a name here" float></ons-input>
+          <ons-input id="dict_add_name" modifier="underbar" placeholder="Enter a name here" onkeypress="dict_add_keypress(event);" float />
         </p>
         <p style="margin-top: 30px;">
           <ons-button onclick="dict_createDictionary()">Create</ons-button>
@@ -191,10 +191,10 @@
         <div id="quiz_main" style="text-align: center; margin-top: 30px;">
           <p id="quiz_title">Word 0 / 0</p>
           <p>
-            <ons-input id="quiz_question" value="Question" float readonly></ons-input>
+            <ons-input id="quiz_question" value="Question" float readonly/>
           </p>
           <p>
-            <ons-input id="quiz_answer" modifier="underbar" placeholder="Type your answer here" float></ons-input>
+            <ons-input id="quiz_answer" modifier="underbar" placeholder="Type your answer here" onkeypress="quiz_keypress(event);" float/>
           </p>
           <p style="margin-top: 30px;">
             <ons-button id="quiz_validate" onclick="quiz_validate()">Validate</ons-button>

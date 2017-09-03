@@ -69,10 +69,22 @@ var dict_select = function(event) {
   if (event.target.value == "new") {
     var navigatorElement = document.getElementById('dict_navigator');
     navigatorElement.pushPage('pageAddDictTemplate');
+      
+      var pushedPage = navigatorElement.topPage;
+      pushedPage.onDeviceBackButton = function(event) {
+        dict_cancelDictionary();
+        event.callParentHandler();
+      };
   }
   else {
     dict_id = event.target.value;
     dict_updateUI();
+  }
+}
+
+function dict_add_keypress(event) {
+  if (event.key === 'Enter') {
+    dict_createDictionary();
   }
 }
 
@@ -191,6 +203,48 @@ var dict_updateDictionaryListUI = function() {
     optionElement.value = dictionary.id;
   
     selectDictOptions.appendChild(optionElement);
+  }
+}
+
+function dict_keypress1(event) {
+  if (event.key === 'Enter') {
+    
+    var wordField1 = document.getElementById('dict_word1');
+    var wordField2 = document.getElementById('dict_word2');
+  
+    var word1 = wordField1.value;
+    var word2 = wordField2.value;
+    
+    if (word1 && !word2) {
+      // Switch to word 2
+      console.log("wordField2 focus");
+      wordField2._input.focus();
+    }
+    else {
+      // Remove focus
+      wordField1._input.blur();
+    }
+  }
+}
+
+function dict_keypress2(event) {
+  if (event.key === 'Enter') {
+    
+    var wordField1 = document.getElementById('dict_word1');
+    var wordField2 = document.getElementById('dict_word2');
+  
+    var word1 = wordField1.value;
+    var word2 = wordField2.value;
+    
+    if (word2 && !word1) {
+      // Switch to word 1
+      console.log("wordField1 focus");
+      wordField1._input.focus();
+    }
+    else {
+      // Remove focus
+      wordField2._input.blur();
+    }
   }
 }
 

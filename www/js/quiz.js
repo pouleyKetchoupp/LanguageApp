@@ -288,6 +288,12 @@ var quiz_start = function() {
       var navigatorElement = document.getElementById('quiz_navigator');
       navigatorElement.pushPage('pageQuizStartTemplate');
       
+      var pushedPage = navigatorElement.topPage;
+      pushedPage.onDeviceBackButton = function(event) {
+        quiz_stop();
+        event.callParentHandler();
+      };
+      
       quiz_started = true;
     }
   }
@@ -313,6 +319,12 @@ var quiz_postStart = function() {
 var quiz_stop = function() {
   console.log("quiz_stop");
   quiz_started = false;
+}
+
+function quiz_keypress(event) {
+  if (event.key === 'Enter') {
+    quiz_validate();
+  }
 }
 
 var quiz_validate = function() {
