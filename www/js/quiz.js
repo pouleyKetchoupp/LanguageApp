@@ -166,7 +166,7 @@ var quiz_updateSelectUI = function() {
     }
     
     var listElement = document.getElementById('quiz_selectList');
-    listElement.append(itemElement);
+    listElement.appendChild(itemElement);
     
     quiz_updateNumSelected();
   }

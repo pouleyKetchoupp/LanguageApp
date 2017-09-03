@@ -163,7 +163,9 @@ var dict_addDictionary = function(dictionary) {
 var dict_updateDictionaryListUI = function() {
   // Clear all current dictionaries except the first one
   var selectDictElement = document.getElementById('dict_select');
+  
   var selectDictOptions = selectDictElement.children[0];
+  
   while (selectDictOptions.children.length > 1) {
       selectDictOptions.removeChild(selectDictOptions.lastChild);
   }
@@ -187,8 +189,8 @@ var dict_updateDictionaryListUI = function() {
     var optionElement = document.createElement('option');
     optionElement.innerText = dictionary.name;
     optionElement.value = dictionary.id;
-    
-    selectDictOptions.append(optionElement);
+  
+    selectDictOptions.appendChild(optionElement);
   }
 }
 
@@ -285,7 +287,7 @@ var dict_addWordUI = function(id, word1, word2, canDelete) {
   }
   
   var listElement = document.getElementById('dict_word_list');
-  listElement.append(itemElement);
+  listElement.appendChild(itemElement);
 }
 
 var dict_removeWord = function(itemElement) {
