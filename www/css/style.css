@@ -4,14 +4,21 @@
     src: url('../font/Imprima-Regular.ttf');
 }
 
-  body, input, select
+  ons-input, input
+  {
+    height: 48px !important;
+  }
+
+  body, ons-input, input, select
   {
     font-size: 30px !important;
   }
+  
   ons-button{
     font-size: 20px !important;
     padding: 10px 20px 10px 20px !important;
   }
+  
 .page, body, input, select, ons-button, ons-list-item, ons-page, div {
   font-family: -apple-system, 'Imprima', Helvetica, Arial, 'Lucida Grande', sans-serif !important;
 }
