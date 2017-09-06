@@ -35,6 +35,8 @@
         dict_addDictionary(dict_thai_food);
         dict_addDictionary(dict_thai_drinks);
         dict_addDictionary(dict_thai_numbers);
+        dict_addDictionary(dict_thai_place);
+        dict_addDictionary(dict_thai_livingroom);
         dict_load();
       }
       else if (event.target.id == "pageQuiz")
@@ -71,8 +73,8 @@
     </ons-toolbar>
 
     <ons-tabbar position="auto">
-      <ons-tab page="pageDictNavigatorTemplate" label="Dictionary" icon="square" active></ons-tab>
-      <ons-tab page="pageQuizNavigatorTemplate" label="Quiz" icon="square"></ons-tab>
+      <ons-tab page="pageDictNavigatorTemplate" label="Dictionary" icon="md-book" active></ons-tab>
+      <ons-tab page="pageQuizNavigatorTemplate" label="Quiz" icon="md-gesture"></ons-tab>
     </ons-tabbar>
   </ons-page>
 
@@ -90,13 +92,14 @@
           <ons-select id="dict_select" onchange="dict_select(event)">
             <option value="new">New...</option>
           </ons-select>
+          <br/><br/>
           <p style="margin-top: 10px;">
             <ons-row>
               <ons-col id="dict_language1" style="text-align: left; margin-left: 30px;" vertical-align="center">
                 Language:
               </ons-col>
               <ons-col style="text-align: left; margin-right: 10px;">
-                <ons-input id="dict_word1" modifier="underbar" placeholder="Type a word here" onkeypress="dict_keypress1(event);" float />
+                <ons-input id="dict_word1" modifier="underbar" placeholder="english" onkeypress="dict_keypress1(event);" float />
               </ons-col>
             </ons-row>
           </p>
@@ -106,12 +109,12 @@
                 Language:
               </ons-col>
               <ons-col style="text-align: left; margin-right: 10px;">
-                <ons-input id="dict_word2" modifier="underbar" placeholder="Type a word here" onkeypress="dict_keypress2(event);" float />
+                <ons-input id="dict_word2" modifier="underbar" placeholder="thai" onkeypress="dict_keypress2(event);" float />
               </ons-col>
             </ons-row>
           </p>
           <p style="margin-top: 10px;">
-            <ons-button id="dict_word_button" onclick="dict_addWord()">Add word</ons-button>
+            <ons-button id="dict_word_button" onclick="dict_addWord()">Add Word</ons-button>
           </p>
           <ons-list id="dict_word_list">
           </ons-list>
@@ -149,7 +152,7 @@
   <ons-template id="pageQuizTemplate">
     <ons-page id="pageQuiz">
       <div class="content" style="text-align: center">
-        <p>Quiz options</p>
+        <p>Quiz Options</p>
         <div style="text-align: center; margin-top: 30px;">
           <p style="margin-top: 30px;">
             <ons-button id="quiz_select" onclick="quiz_select()">Select dictionaries</ons-button>
@@ -194,7 +197,7 @@
             <ons-input id="quiz_question" value="Question" float readonly/>
           </p>
           <p>
-            <ons-input id="quiz_answer" modifier="underbar" placeholder="Type your answer here" onkeypress="quiz_keypress(event);" float/>
+            <ons-input id="quiz_answer" modifier="underbar" placeholder="answer here" onkeypress="quiz_keypress(event);" float/>
           </p>
           <p style="margin-top: 30px;">
             <ons-button id="quiz_validate" onclick="quiz_validate()">Validate</ons-button>
@@ -240,7 +243,7 @@
         <ons-col>
         Word 1
         </ons-col>
-        <ons-col>
+        <ons-col style="text-align: right">
         Word 2
         </ons-col>
         <ons-col width="15%">

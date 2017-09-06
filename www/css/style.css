@@ -1,2 +1,17 @@
 /**/
+@font-face {
+    font-family: Imprima;
+    src: url('../font/Imprima-Regular.ttf');
+}
 
+  body, input, select
+  {
+    font-size: 30px !important;
+  }
+  ons-button{
+    font-size: 20px !important;
+    padding: 10px 20px 10px 20px !important;
+  }
+.page, body, input, select, ons-button, ons-list-item, ons-page, div {
+  font-family: -apple-system, 'Imprima', Helvetica, Arial, 'Lucida Grande', sans-serif !important;
+}
