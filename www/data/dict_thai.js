@@ -190,7 +190,7 @@ var dict_thai_place = {
     ["between", "ระหว่าง"],
     ["around", "เเถวๆ"],
     ["around", "เเถว"],
-    ["edge", "เหม็น"],
+    ["edge", "ริม"],
     ["rim", "ริม"],
   ]
 }
